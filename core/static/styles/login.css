@@ -1,0 +1,152 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #f0f2f5;
+}
+.login{
+    margin: 10% auto;
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    justify-content: space-between;
+}
+
+.facebook-img{
+    width: 50%;
+}
+
+.login-form{
+    width: 45%;
+}
+
+.login-form input[type=text]{
+    height: 5vh;
+    border: 2px solid ;
+    border-color: #dddfe2;
+    border-radius: 10px;
+    width: 90%;
+    padding: 2%;
+    font-family:SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-size:2.0vh;
+    margin: 4% 0% 1%;
+}
+.login-form input[type=text]:hover {
+    border-color: #67a1eb;
+}
+.login-form input[type=text]:focus {
+    border-color: #67a1eb;
+}
+.login-form input[type=password]{
+    height: 5vh;
+    border: 2px solid ;
+    border-color: #dddfe2;
+    border-radius: 10px;
+    width: 90%;
+    padding: 2%;
+    font-family:SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    margin: 4% 0% 1%;
+    font-size:2.0vh;
+}
+
+.login-form input[type=password]:hover {
+    border-color: #67a1eb;
+}
+.login-form input[type=password]:focus {
+    border-color: #67a1eb;
+}
+.login-form input[type=submit]{
+    height: 5vh;
+    border-color: #1877f2;
+    background-color: #1877f2;
+    color: white;
+    border-radius: 10px;
+    width: 90%;
+    padding: 2%;
+    font-family:SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-size:2.2vh;
+    margin: 4% 0% 1%;
+    font-weight: bolder;
+}
+
+
+.login-form{
+    background-color: white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.login-form form{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.forgot-password{
+    width: 90%;
+
+}
+
+.forgot-password a{
+    text-align: center;
+    display: inline-block;
+    color: #1877f2;
+    text-decoration: none;
+    padding: 2%;
+    width: 100%;
+    border-bottom: 2px solid #dddfe2;
+}
+
+
+.create-account{
+    padding: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.create-account button{
+    height: 5vh;
+    background-color: #42b72a;
+    border:none;
+    border-radius: 10px;
+    font-size: 2vh;
+    font-weight: bolder;
+    color: white;
+    padding: 2%;
+}
+
+.create-page{
+    padding: 5%;
+    text-align: center;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+}
+
+.create-page a{
+    text-decoration: none;
+    font-weight: bolder;
+    color: black;
+}
+
+footer {
+    background-color: #1877f2;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

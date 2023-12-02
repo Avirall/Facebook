@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    {% block head %}{% endblock head %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/512px-2021_Facebook_icon.svg.png?20220821121039">
     <title>{% block title %}Facebook{% endblock %}</title>
 </head>
 <body>
 
     <header>
-        <h1>{% block header %}Welcome to Facebook{% endblock %}</h1>
+        <h1>{% block header %}{% endblock %}</h1>
     </header>
 
     <main>
@@ -23,8 +26,11 @@
         {% endblock %}
     </main>
 
+ 
     <footer>
+        <p>&copy; 2023 Meta | <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Cookies</a> | <a href="#">Help Center</a></p>
     </footer>
+
 
 
 </body>

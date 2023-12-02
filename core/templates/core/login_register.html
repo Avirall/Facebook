@@ -1,12 +1,39 @@
 {% extends "core/base.html" %}
-
-{%block content%}
-<div> 
-    <form method='POST' action='.'>
+{% block title %}Facebook - login or sign up{% endblock %}
+{% load static %} {% block head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  media="screen"
+  href="{% static 'styles/login.css' %}"
+/>
+{% endblock %} {%block content%}
+<div class="login">
+    <div class="facebook-img">
+      <img src="{% static 'images/facebook-desk.svg' %}" width="75%" />
+      <p style=" font-family:SFProDisplay-Regular, Helvetica, Arial, sans-serif;font-size:2.75vh;">Facebook helps you connect and share with the people in your life.</p>
+    </div>
+    <div class="login-form">
+      <form method="POST" action=".">
         {% csrf_token %}
-        <input type='text' name='Username' placeholder='Email address or phone number'>
-        <input type='Password' name='Password' placeholder='Password'>
-        <input type='submit' value='Login'>
-    </form>
+        <input
+          type="text"
+          name="email"
+          placeholder="Email address or phone number"
+        />
+        <input type="Password" name="password" placeholder="Password" />
+        <input type="submit" value="Log in" />
+        <div class='forgot-password'>
+            <a href=''>Forgotten password?</a>
+        </div>
+        <div class='create-account'>
+            <button>Create new account</button>
+        </div>
+      </form>
+      <div class='create-page'><a href='.'>Create a Page</a> for a celebrity, brand or business.</div>
+    </div>
 </div>
+
 {% endblock%}
+
+{% include "core/footer.html" %}
