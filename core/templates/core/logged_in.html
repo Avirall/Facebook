@@ -1,5 +1,224 @@
-{% extends "core/base.html" %}
+{% extends "core/base.html" %} {% block title %}Facebook{% endblock %}
+{% load static %} {% block head %}
+<link
+rel="stylesheet"
+type="text/css"
+media="screen"
+href="{% static 'styles/home.css' %}"
+/>
+{% endblock %}
+{% block header %}
+<header>
+    <div class='logo-search'>
+        <div class='logo'>
+            <img src="../static/images/facebook.png" alt="Facebook-logo" width="100%">
+        </div>
+        <div class='search'>
+            <form action="https://www.google.com/search?=" method="GET">
+                <img src="https://cdn-icons-png.flaticon.com/128/2811/2811806.png" alt="" width="8%">
+                <input type="text" placeholder="Search Facebook">
+            </form>
+        </div>
+    </div>
 
-{%block content%}
-<h1>Congrats you are logged in </h1>
-{% endblock%}
+    <div class='nav'>
+        <div class="" id='active'><img src="../static/images/home.png" alt="" width='15%' height='80%'></div>
+        <div class=""><img alt="" src="../static/images/friends.png" width='15%' height='80%'></div>
+        <div class=""><img src="../static/images/multiple-users-silhouette.png" alt="" width='15%' height='80%'></div>
+    </div>
+    
+    <div class='profile'>
+        <div class="div" id='friends'><button>Find friends</button></div>
+        <div class="div"><button><img src="../static/images/dots-menu.png" alt="" width="50%"></button></div>
+        <div class="div"><button><img src="../static/images/messenger.png" alt="" width="50%"></button></div>
+        <div class="div"><button><img src="../static/images/bell.png" alt="" width="50%"></button></div>
+        <div class="div"><button><img src="../static/images/user.png" alt="" width="50%"></button></div>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<main class='home'>
+<section>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/user.png" alt="" width='70%'></div>
+            <div style='margin-left:5%;'>Aviral Singh</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/friend.png" alt="" width='90%'></div>
+            <div style='margin-left:5%;'>Find friends</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/saved.png" alt="" width='90%'></div>
+            <div style='margin-left:5%;'>Saved</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/facebook.png" alt="" width='70%'></div>
+            <div style='margin-left:5%;'>Welcome</span>
+        </button></div>
+    </div></button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/memories.png" alt="" width='90%'></div>
+            <div style='margin-left:5%;'>Memories</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/groups.png" alt="" width='90%'></div>
+            <div style='margin-left:5%;'>Groups</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/video.png" alt="" width='90%'></div>
+            <div style='margin-left:5%;'>Videos</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/marketplace.png" alt="" width='70%'></div>
+            <div style='margin-left:5%;'>Marketplace</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/feed.png" alt="" width='90%'></div>
+            <div style='margin-left:5%;'>Feeds</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/events.png" alt="" width='90%'></div>
+            <div style='margin-left:5%;'>Events</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/graph.png" alt="" width='70%'></div>
+            <div style='margin-left:5%;'>Ads Manager</div>
+        </button></div>
+    <div class="div1"><button>
+            <div class='side-logos'><img src="../static/images/add.png" alt="" width='70%'></div>
+            <div style='margin-left:5%;'>See more</div>
+        </button></div>
+
+</section>
+
+<main class='main'>
+    <div class='create-post'>
+        <div class='posts'>
+            <div class='user'>
+                <img src='../static/images/user.png' width='100%'>
+            </div>
+            <div class='thoughts'>
+                <button onclick='openModal()'> What's on your mind, Aviral? </button>
+            </div>
+        </div>
+        <div class='upload'>
+            <button>
+                <div class='image'><img src='../static/images/image-gallery.png' width='100%'></div>
+                <div class='captions'>Photo/video</div>
+            </button>
+            <button>
+                <div class='image'><img src='../static/images/face.png' width='100%'></div>
+                <div class='captions'>Feeling Activity</div>
+            </button>
+        </div>
+    </div>
+    <div class='create-post' id='create' style='width:30%;'>
+        <div class='posts'>
+            <div class='thoughts' style='text-align:center;font-weight:bolder;font-size:2vh'>
+             Create Post
+            </div>
+            <div class='user'>
+                <img onclick='closeModal()' src='../static/images/remove.png' width='100%'>
+            </div>
+        </div>
+        <div class='posts' style='border-bottom:none;'>
+            <div class='user'>
+                <img src='../static/images/user.png' width='100%'>
+            </div>
+            <div class='thoughts' style='font-weight:bolder;'>
+                Aviral Singh
+            </div>
+        </div>
+        <div class='desc'>
+            <form method='post' action='/loggedin/' enctype="multipart/form-data">
+                {% csrf_token %}
+                <textarea id="textArea" name='desc' oninput="autoResize()" placeholder="What's on your mind, Aviral?"></textarea>
+                <input type="file" name='fileinput' id="mediaInput" accept="image/*,video/*" onchange="previewMedia(event)"> 
+                <div style='width:100%;text-align:center;' ><img id="mediaPreview"  src='../static/images/user.png' alt="Media Preview" width='70%'></div>
+                <div class='post-data'><input onclick='closeModal()' type='submit' value='Post'></div>
+            </form>
+        </div>
+    </div>
+
+    {% for post in posts %}
+    <div class='create-post'>
+        <div class='posts' style='border-bottom:none;'>
+            <div class='user'>
+                <img src='../static/images/user.png' width='100%'>
+            </div>
+            <div class='thoughts' style='font-weight:bolder;'>
+                {{post.user}}<br>
+                <p style='font-weight:normal;font-size:1.3vh;color:gray;'>{{post.posted}}</p>
+            </div>
+        </div>
+        {% if post.description %}
+        <div style="padding:2%">
+            {{post.description}}
+        </div>
+        {% endif %}
+
+        {% if post.media_file %}
+        <div>
+            <img src='{{ post.media_file.url}}' width='100%' alt-'post-image'>
+        </div>
+        {% endif %}
+
+        <div style='padding-top:1%;display:flex; align-items:center'>
+            <img src='../static/images/likes.png' width='3%'><p style='margin-left:1%;color:gray'>{{post.likes}} likes</p>
+        </div>
+
+        <div class='upload'style="border-top:2px solid rgb(188, 188, 188,.6); padding-top:1%">
+                <button>
+                <div class='image'><img src='../static/images/like.png' width='100%'></div>
+                <div class='captions'>
+               <a id='like-count' href="/loggedin/{{post.id}}">
+                Like</a></div>
+            </button>
+            <button>
+                <div class='image'><img src='../static/images/chat.png' width='100%'></div>
+                <div class='captions'>Comment</div>
+            </button>
+            <button>
+                <div class='image'><img src='../static/images/share.png' width='100%'></div>
+                <div class='captions'>Share</div>
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+
+</main>
+
+
+
+<script>
+    function previewMedia(event) {
+        var input = event.target;
+        var preview = document.getElementById("mediaPreview");
+  
+        var reader = new FileReader();
+        reader.onload = function(){
+          preview.src = reader.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+      function openModal() {
+        document.getElementById('create').style.display = 'block';
+        function autoResize() {
+            var textarea = document.getElementById("textArea");
+            textarea.style.height = "auto";
+            textarea.style.height = (textarea.scrollHeight) + "px";
+          }
+          autoResize();
+    }
+  
+      function closeModal() {
+        document.getElementById('create').style.display = 'none';
+        document.body.classList.remove('blur');
+      }
+
+      
+  </script>
+</main>
+{% endblock content %}
+

@@ -1,0 +1,54 @@
+{% extends "core/base.html" %} {% block title %}Facebook - sign up{% endblock %}
+{% load static %} {% block head %}
+<link
+rel="stylesheet"
+type="text/css"
+media="screen"
+href="{% static 'styles/signup.css' %}"
+/>
+{% endblock %} {%block content%}
+<div class="register">
+  <div class="register-form">
+    <form method="POST" action="/signup/">
+      {% csrf_token %} 
+      <div class='heading'>
+        <span style="font-weight:bolder;font-size:3.2vh;line-height:3.5vh;">Sign Up</span> <br>
+        <span style="color:gray;line-height:3.5vh;">It's quick and easy.</span>
+      </div>
+      <div class='names'>
+        <input type="text" name="firstname" placeholder="First name" />
+        <input type="text" name="surname" placeholder="Surname" />
+      </div>
+      <input type="text" name="username" placeholder="Mobile number or email address" />
+      <input type="password" name="password" placeholder="New password" />
+      <label> <span style="color:gray;font-size:1.5vh">Date of birth</span></label>
+      <input type="date" name="dob"/>
+      <label> <span style="color:gray;font-size:1.5vh;">Gender</span></label><br>
+      <div class='gender'>
+        <div>
+          <label for="male">Male</label>
+        <input type="radio" name="gender" value="male" id="male">
+        </div>
+        <div>
+          <label for="Female">Female</label>
+        <input type="radio" name="gender" value="Female" id="Female">
+        </div>
+        <div>
+          <label for="Other">Other</label>
+        <input type="radio" name="gender" value="Other" id="Other">
+        </div>   </div>
+      <div class="create-page"><br>
+        People who use our service may have uploaded your contact information to Facebook.
+        Facebook. <a href='https://www.facebook.com/help/637205020878504'>Learn more.</a><br><br> By clicking Sign Up, you agree to our <a href='https://www.facebook.com/legal/terms/update'>Terms</a>, <a href='https://www.facebook.com/privacy/policy/?entry_point=data_policy_redirect&entry=0'>Privacy 
+        Policy</a> and <a href='https://www.facebook.com/privacy/policies/cookies/?entry_point=cookie_policy_redirect&entry=0'>Cookies Policy</a>. You may receive SMS notifications from us and
+        can opt out at any time..
+      </div>
+      <div class='create'><input type='submit' value='Sign up'></div>
+
+    </form>
+    
+  </div>
+</div>
+
+
+{% endblock%} {% include "core/footer.html" %}

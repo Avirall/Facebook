@@ -4,6 +4,7 @@
     box-sizing: border-box;
 }
 
+
 body{
     background-color: #f0f2f5;
 }
@@ -53,9 +54,11 @@ body{
 }
 
 .login-form input[type=password]:hover {
+    outline-color: #67a1eb;
     border-color: #67a1eb;
 }
 .login-form input[type=password]:focus {
+    outline-color: #67a1eb;
     border-color: #67a1eb;
 }
 .login-form input[type=submit]{
@@ -101,6 +104,10 @@ body{
     border-bottom: 2px solid #dddfe2;
 }
 
+#test {
+    color:white;
+    text-decoration: none;
+}
 
 .create-account{
     padding: 5%;
@@ -118,6 +125,8 @@ body{
     color: white;
     padding: 2%;
 }
+
+
 
 .create-page{
     padding: 5%;
@@ -150,3 +159,4 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
