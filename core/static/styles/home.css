@@ -297,5 +297,19 @@ section div button:hover{
 
   #like-count{
     text-decoration: none;
+    color:gray;
+  }
+
+  #like-count:visited{
+    color:gray;
   }
   
+
+  #comments{
+    display: none;
+    position: fixed;
+    top:35%;
+    left:47%;
+    transform: translate(-50%,-50%);
+    z-index: 2;
+  }

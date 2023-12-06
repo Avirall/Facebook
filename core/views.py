@@ -62,7 +62,8 @@ def loginUser(request):
         
     
     posts= Post.objects.all()
-    context = {'posts':posts}
+    comments = Comment.objects.all
+    context = {'posts':posts,'comments':comments}
     return render(request,'core/logged_in.html',context)
 
 def like(request, id):
@@ -82,3 +83,16 @@ def like(request, id):
     post.likes = current_likes  
     post.save() 
     return redirect('home')
+
+def comment(request,id):
+    
+    if request.method=='POST':
+        user=request.user
+        post = Post.objects.get(id=id)
+        body = request.POST.get('comment')
+        Comment.objects.create(user=user,post=post,body=body)
+        return redirect('home')
+    posts= Post.objects.all()
+    comments = Comment.objects.all
+    context = {'posts':posts,'comments':comments}
+    return render(request,'core/logged_in.html',context)

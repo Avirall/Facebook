@@ -9,6 +9,7 @@ urlpatterns = [
     path('loggedin/',views.loginUser,name='home'),
     path('signup/',views.registerUser,name='signup'),
     path('loggedin/<int:id>/', views.like, name='like'),
+    path('loggedin/comments/<int:id>/', views.comment, name='comment'),
 ]
 
 

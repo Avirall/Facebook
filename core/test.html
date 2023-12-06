@@ -1,3 +1,126 @@
-<form action="">
-    <input type="image" src="" alt="">
-</form>
+{% for post in posts %}
+<div class='create-post'>
+    <div class='posts' style='border-bottom:none;'>
+        <div class='user'>
+            <img src='../static/images/user.png' width='100%'>
+        </div>
+        <div class='thoughts' style='font-weight:bolder;'>
+            {{post.user}}<br>
+            <p style='font-weight:normal;font-size:1.3vh;color:gray;'>{{post.posted}}</p>
+        </div>
+    </div>
+    {% if post.description %}
+    <div style="padding:2%">
+        {{post.description}}
+    </div>
+    {% endif %}
+
+    {% if post.media_file %}
+    <div>
+        <img src='{{ post.media_file.url}}' width='100%' alt-'post-image'>
+    </div>
+    {% endif %}
+
+    <div style='padding-top:1%;display:flex; align-items:center'>
+        <img src='../static/images/likes.png' width='3%'>
+        <p style='margin-left:1%;color:gray'>{{post.likes}} likes</p>
+    </div>
+
+    <div class='upload' style="border-top:2px solid rgb(188, 188, 188,.6); padding-top:1%">
+        <button>
+            <div class='image'><img src='../static/images/like.png' width='100%'></div>
+            <div class='captions'>
+                <a style='color:gray;' id='like-count' href="/loggedin/{{post.id}}">
+                    Like</a>
+            </div>
+        </button>
+        <button>
+            <div class='image'><img src='../static/images/chat.png' width='100%'></div>
+            <div class='captions'> <a href="/loggedin/comments/{{post.id}}">Comment</a></div>
+        </button>
+        <button>
+            <div class='image'><img src='../static/images/share.png' width='100%'></div>
+            <div class='captions'>Share</div>
+        </button>
+    </div>
+</div>
+{% endfor %}
+
+
+</main>
+
+
+
+
+
+
+<div class='create-post' id='comments' style='width:60%;'>
+    <div class='posts' id='comments-head'>
+        <div class='thoughts' style='text-align:center;font-weight:bolder;font-size:2vh'>
+            {{post.user}}'s post
+        </div>
+        <div class='user'>
+            <img onclick='closeModal()' src='../static/images/remove.png' width='100%'>
+        </div>
+    </div>
+
+
+    {% comment %} post inside the comment {% endcomment %}
+
+    <div class='create-post' style='width:100%;margin:0%;box-shadow:none;'>
+        <div class='posts' style='border-bottom:none;'>
+            <div class='user'>
+                <img src='../static/images/user.png' width='100%'>
+            </div>
+            <div class='thoughts' style='font-weight:bolder;'>
+                {{post.user}}<br>
+                <p style='font-weight:normal;font-size:1.3vh;color:gray;'>{{post.posted}}</p>
+            </div>
+        </div>
+        {% if post.description %}
+        <div style="padding:2%">
+            {{post.description}}
+        </div>
+        {% endif %}
+
+        {% if post.media_file %}
+        <div>
+            <img src='{{ post.media_file.url}}' width='100%' alt-'post-image'>
+        </div>
+        {% endif %}
+
+        <div style='padding-top:1%;display:flex; align-items:center'>
+            <img src='../static/images/likes.png' width='3%'>
+            <p style='margin-left:1%;color:gray'>{{post.likes}} likes</p>
+        </div>
+
+        <div class='upload' style="border-top:2px solid rgb(188, 188, 188,.6); padding-top:1%">
+            <button>
+                <div class='image'><img src='../static/images/like.png' width='100%'></div>
+                <div class='captions'>
+                    <a id='like-count' href="/loggedin/{{post.id}}">
+                        Like</a>
+                </div>
+            </button>
+            <button>
+                <div class='image'><img src='../static/images/chat.png' width='100%'></div>
+                <div class='captions'>Comment</div>
+            </button>
+            <button>
+                <div class='image'><img src='../static/images/share.png' width='100%'></div>
+                <div class='captions'>Share</div>
+            </button>
+        </div>
+    </div>
+
+    {% comment %} Post inside comment ends here {% endcomment %}
+    {% comment %} comment putting button {% endcomment %}
+    <div class='desc' id='comments-desc'>
+        <form method='post' action='/loggedin/'>
+            {% csrf_token %}
+            <textarea id="textArea" name='comment' oninput="autoResize()"
+                placeholder="Write a comment here..."></textarea>
+            <div class='post-data'><input onclick='closeModal()' type='submit' value='Comment'></div>
+        </form>
+    </div>
+</div>
