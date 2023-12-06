@@ -3,7 +3,7 @@ from .models import UserProfile,Post,Comment,Likes
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -50,22 +50,29 @@ def registerUser(request):
         return redirect('login')
     return render(request, 'core/register.html')
 
-def loginUser(request):
-    
+
+@login_required(login_url='login')
+def createpost(request):
     if request.method=='POST':
         user=request.user
         description=request.POST.get('desc')
         media_file=request.FILES.get('fileinput')
         new_post=Post.objects.create(user=user,description=description,media_file=media_file)
         new_post.save()
-        return redirect('home')
-        
-    
+        return redirect('home')    
+
+def loginUser(request):
+
     posts= Post.objects.all()
-    comments = Comment.objects.all
+    comments = Comment.objects.all()
     context = {'posts':posts,'comments':comments}
     return render(request,'core/logged_in.html',context)
 
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
+@login_required(login_url='login')
 def like(request, id):
     user = request.user
     post = get_object_or_404(Post, id=id)
@@ -76,7 +83,6 @@ def like(request, id):
         Likes.objects.create(user=user, post=post)
         current_likes += 1
     else:
-        # Delete the existing like
         Likes.objects.filter(user=user, post=post).delete()
         current_likes -= 1
 
@@ -84,6 +90,7 @@ def like(request, id):
     post.save() 
     return redirect('home')
 
+@login_required(login_url='login')
 def comment(request,id):
     
     if request.method=='POST':
@@ -95,4 +102,9 @@ def comment(request,id):
     posts= Post.objects.all()
     comments = Comment.objects.all
     context = {'posts':posts,'comments':comments}
-    return render(request,'core/logged_in.html',context)
+    return render(request,'core/comments.html',context)
+
+@login_required(login_url='login')
+
+def addFriend(request):
+    return render(request,'core/addfriends.html',{})

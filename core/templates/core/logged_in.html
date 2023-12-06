@@ -23,22 +23,30 @@ href="{% static 'styles/home.css' %}"
 
     <div class='nav'>
         <div class="" id='active'><img src="../static/images/home.png" alt="" width='15%' height='80%'></div>
-        <div class=""><img alt="" src="../static/images/friends.png" width='15%' height='80%'></div>
+        <div class="" ><a href='/loggedin/friends'><img style='margin-left:46%' alt="" src="../static/images/friends.png" width='15%' height='80%'></a></div>
         <div class=""><img src="../static/images/multiple-users-silhouette.png" alt="" width='15%' height='80%'></div>
     </div>
-    
+ 
     <div class='profile'>
         <div class="div" id='friends'><button>Find friends</button></div>
         <div class="div"><button><img src="../static/images/dots-menu.png" alt="" width="50%"></button></div>
         <div class="div"><button><img src="../static/images/messenger.png" alt="" width="50%"></button></div>
         <div class="div"><button><img src="../static/images/bell.png" alt="" width="50%"></button></div>
-        <div class="div"><button><img src="../static/images/user.png" alt="" width="50%"></button></div>
+        <div class="div"><button onclick='openlog()'  id='user-profile'><img src="../static/images/user.png" alt="" width="50%"></button>
+            {% if request.user.is_authenticated %}<div id='log' class='login-logout'><a href="{%url 'logout'%}"><button><img src="../static/images/icons8-logout-32.png" alt="" width="20%"><p>Logout</p></button></a></div>
+            {%else%}
+            <div id='log' class='login-logout'><a href="{%url 'login'%}"><button><img src="../static/images/login.png" alt="" width="20%"><p>Login</p></button></a></div>
+            {% endif %}  
+        </div>
     </div>
 </header>
 {% endblock %}
 
 {% block content %}
 <main class='home'>
+
+{% comment %} code for side bar {% endcomment %}
+
 <section>
     <div class="div1"><button>
             <div class='side-logos'><img src="../static/images/user.png" alt="" width='70%'></div>
@@ -92,6 +100,9 @@ href="{% static 'styles/home.css' %}"
 
 </section>
 
+
+{% comment %}  code to create a post {% endcomment %}
+
 <main class='main'>
     <div class='create-post'>
         <div class='posts'>
@@ -99,11 +110,11 @@ href="{% static 'styles/home.css' %}"
                 <img src='../static/images/user.png' width='100%'>
             </div>
             <div class='thoughts'>
-                <button onclick='openModal()'> What's on your mind, Aviral? </button>
+                <button onclick='openModal()'> What's on your mind, {{request.user.first_name}}? </button>
             </div>
         </div>
         <div class='upload'>
-            <button>
+            <button onclick='openModal()'>
                 <div class='image'><img src='../static/images/image-gallery.png' width='100%'></div>
                 <div class='captions'>Photo/video</div>
             </button>
@@ -127,13 +138,13 @@ href="{% static 'styles/home.css' %}"
                 <img src='../static/images/user.png' width='100%'>
             </div>
             <div class='thoughts' style='font-weight:bolder;'>
-                Aviral Singh
+                {{request.user.first_name}}
             </div>
         </div>
         <div class='desc'>
-            <form method='post' action='/loggedin/' enctype="multipart/form-data">
+            <form method='post' action='/loggedin/posts/' enctype="multipart/form-data">
                 {% csrf_token %}
-                <textarea id="textArea" name='desc' oninput="autoResize()" placeholder="What's on your mind, Aviral?"></textarea>
+                <textarea id="textArea" name='desc' oninput="autoResize()" placeholder="What's on your mind, {{request.user.first_name}}?"></textarea>
                 <input type="file" name='fileinput' id="mediaInput" accept="image/*,video/*" onchange="previewMedia(event)"> 
                 <div style='width:100%;text-align:center;' ><img id="mediaPreview"  src='../static/images/user.png' alt="Media Preview" width='70%'></div>
                 <div class='post-data'><input onclick='closeModal()' type='submit' value='Post'></div>
@@ -148,7 +159,7 @@ href="{% static 'styles/home.css' %}"
                 <img src='../static/images/user.png' width='100%'>
             </div>
             <div class='thoughts' style='font-weight:bolder;'>
-                {{post.user}}<br>
+                {{post.user.first_name}}<br>
                 <p style='font-weight:normal;font-size:1.3vh;color:gray;'>{{post.posted}}</p>
             </div>
         </div>
@@ -175,7 +186,7 @@ href="{% static 'styles/home.css' %}"
                <a style='color:gray;' id='like-count' href="/loggedin/{{post.id}}">
                 Like</a></div>
             </button>
-            <button onclick='openComment()'>
+            <button onclick='openComment({{post.id}})' >
                 <div class='image'><img src='../static/images/chat.png' width='100%'></div>
                 <div class='captions'>Comment</div>
             </button>
@@ -188,13 +199,13 @@ href="{% static 'styles/home.css' %}"
 
 {% comment %} Designing comment {% endcomment %}
 
-    <div class='create-post' id='comments' style='width:50%;'>
+    <div class='create-post' id='comments{{post.id}}' style='width:40%;display: none; position: fixed; top: 50%; left: 47%; transform: translate(-50%, -50%); z-index: 2;'>
         <div class='posts' id='comments-head'>
             <div class='thoughts' style='text-align:center;font-weight:bolder;font-size:2vh'>
-                {{post.user}}'s post
+                {{request.user.first_name}}'s post
             </div>
             <div class='user'>
-                <img onclick='closeComment()' src='../static/images/remove.png' width='100%'>
+                <img onclick='closeComment({{post.id}})' src='../static/images/remove.png' width='100%'>
             </div>
         </div>
     
@@ -207,7 +218,7 @@ href="{% static 'styles/home.css' %}"
                     <img src='../static/images/user.png' width='100%'>
                 </div>
                 <div class='thoughts' style='font-weight:bolder;'>
-                    {{post.user}}<br>
+                    {{post.user.first_name}}<br>
                     <p style='font-weight:normal;font-size:1.3vh;color:gray;'>{{post.posted}}</p>
                 </div>
             </div>
@@ -248,17 +259,19 @@ href="{% static 'styles/home.css' %}"
         </div>
     
         {% comment %} Post inside comment ends here {% endcomment %}
-        {% for comment in post.comments.all %}
-        <div class='posts' style='border-bottom:none;'>
+        {% for comment in comments %}
+        {% if comment.post.id == post.id %}
+        <div class='posts' style='border-bottom:none; padding-bottom:1%;'>
             <div class='user'>
                 <img src='../static/images/user.png' width='100%'>
             </div>
-            <div class='thoughts' style='font-weight:bolder;display:inline-block;background-color:#f0f2f5;'>
-                {{ comment.user.username }}<br>
-                <p style='font-weight:normal;font-size:1.3vh;color:gray;'>{{post.posted}}</p>
+            <div class='thoughts' style='font-weight:bolder;display:inline-block;background-color:#f0f2f5;border-radius:10px'>
+                {{ comment.user.first_name }}<br>
+                <p style='font-weight:normal;font-size:1.3vh;color:gray;'>{{comment.created}}</p>
                 <p style='font-weight:normal;font-size:1.8vh;color:gray;'>{{ comment.body }}</p>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
         {% comment %} comment putting button {% endcomment %}
         <div class='desc' id='comments-desc'>
@@ -266,7 +279,7 @@ href="{% static 'styles/home.css' %}"
                 {% csrf_token %}
                 <textarea id="textArea" name='comment' oninput="autoResize()"
                     placeholder="Write a comment here..."></textarea>
-                <div class='post-data'><input onclick='closeComment()' type='submit' value='Comment'></div>
+                <div class='post-data'><input onclick='closeComment({{post.id}})' type='submit' value='Comment'></div>
             </form>
         </div>
     </div>
@@ -303,8 +316,9 @@ href="{% static 'styles/home.css' %}"
         document.body.classList.remove('blur');
       }
       {% comment %} script for displaying comments {% endcomment %}
-      function openComment() {
-        document.getElementById('comments').style.display = 'block';
+      function openComment(id) {
+        id='comments'+id
+        document.getElementById(id).style.display = 'block';
         function autoResize() {
             var textarea = document.getElementById("textArea");
             textarea.style.height = "auto";
@@ -313,11 +327,23 @@ href="{% static 'styles/home.css' %}"
           autoResize();
     }
   
-      function closeComment() {
-        document.getElementById('comments').style.display = 'none';
+        function closeComment(id) {
+        id='comments'+id
+        document.getElementById(id).style.display = 'none';
         document.body.classList.remove('blur');
       }
-
+      displaying=0;
+      function openlog(){
+        if(displaying==0){
+        document.getElementById('log').style.display = 'block';
+        displaying=1;
+        }
+        else{
+        document.getElementById('log').style.display = 'none';
+        displaying=0;
+        }
+      }
+      
       
   </script>
 </main>
